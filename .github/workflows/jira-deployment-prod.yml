@@ -1,4 +1,4 @@
-name: Jira Testing Deployment
+name: Jira Production Deployment
 
 on:
   workflow_call:
@@ -9,18 +9,18 @@ on:
         required: true
 
 jobs:
-  jira_deploy_test:
+  jira_deploy_prod:
       runs-on: ubuntu-latest
 
       if: github.event_name == 'push'
 
       steps:
-      - name: Deploy to Test Jira
+      - name: Deploy to Production Jira
         run: |
           echo "github.event_name: ${{github.event_name}}"
           echo "github.ref: ${{github.ref}}"
           echo "DEPLOY_STATE=successful" >> $GITHUB_ENV
-          echo "Deploying to Test..."
+          echo "Deploying to Production..."
 
       - name: Failed Jira Deployment
         if: failure()
@@ -53,15 +53,15 @@ jobs:
           deployment-sequence-number: '${{ github.run_id }}'
           update-sequence-number: '${{ github.run_id }}'
           issue-keys: "${{ steps.jira_keys.outputs.jira-keys }}"
-          display-name: "Deployment to Test"
+          display-name: "Deployment to Production"
           url: "${{github.event.repository.url}}/actions/runs/${{github.run_id}}"
-          description: "Action for Deployment to Test"
+          description: "Action for Deployment to Production"
           last-updated: '${{github.event.head_commit.timestamp}}'
-          label: 'Test Deployment'
+          label: 'Production Deployment'
           state: '${{env.DEPLOY_STATE}}'
           pipeline-id: '${{ github.repository }} ${{ github.workflow }}'
           pipeline-display-name: 'Workflow: ${{ github.workflow }} (#${{ github.run_number }})'
           pipeline-url: '${{github.event.repository.url}}/actions/runs/${{github.run_id}}'
-          environment-id: 'test'
-          environment-display-name: 'Testing'
-          environment-type: 'testing'
+          environment-id: 'prod'
+          environment-display-name: 'Production'
+          environment-type: 'production'
