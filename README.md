@@ -13,7 +13,11 @@
 
 This is a reusable GitHub Action uploads deployment information to specified Jira issues belonging to a connected Jira Cloud instance. To enable the deployments tab on a Jira project follow the [documentation](https://support.atlassian.com/jira-cloud-administration/docs/what-is-the-deployments-feature/).
 
-## Setup Production
+We are using the [Github App](https://github.com/HighwayThree/jira-upload-deployment-info) created by HighwayThree. The app takes all the commits to analyze the Jira keys to identify the issues.
+
+Add the actions below in your next project under the `.github/workflows` folder.
+
+### Setup Production
 
 ```yml
 name: Deployment to Production
@@ -32,7 +36,7 @@ jobs:
       CLIENT_SECRET: ${{ secrets.JIRA_CLIENT_SECRET }}
 ```
 
-## Setup Test
+### Setup Test
 
 ```yml
 name: Deployment to Test
